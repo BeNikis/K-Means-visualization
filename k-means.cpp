@@ -11,6 +11,8 @@
 #include <cmath>
 #include <cstdlib>
 
+
+
 	class Clusters {
 		
 		std::vector<sf::CircleShape> clusters;
@@ -124,7 +126,16 @@
 		bool clustersStable() { return clusters_stable;};		
 		};
 				
-				
+
+int pressedDigit(sf::Event e) {
+	sf::Keyboard::Key num=e.Key.Code;
+	if ((num >= sf::Keyboard::Num0) && (num <= sf::Keyboard::Num9)) 
+		return num-sf::Keyboard::Num0;
+	else if	((num >= sf::Keyboard::Numpad0) &&	(num <= sf::Keyboard::Numpad9))
+		return num-sf::Keyboard::Numpad0;
+	else
+		return -1;
+	};
 
 
 int main(int argc, char** argv)
@@ -151,12 +162,16 @@ int main(int argc, char** argv)
 		win.Clear();
 		while (win.PollEvent(mainloop)) {
 			if (mainloop.Type==sf::Event::Closed) win.Close();
-			if (mainloop.Type==sf::Event::KeyPressed && mainloop.Key.Code==17) clu.reset(numc=5);
+			
+			if (mainloop.Type==sf::Event::KeyPressed) {
+				int pressed = pressedDigit(mainloop) ;
+				if (pressed != -1 || pressed != 0 || pressed != 1) numc=pressed;
+			};
 		};
 		
 		if (clu.clustersStable()) {
 			std::cout << numc << "\n";
-			clu.reset(--numc);
+			clu.reset(numc);
 		} 
 		
 		clu.adjust_clusters(points);

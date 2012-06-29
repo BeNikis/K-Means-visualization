@@ -1,3 +1,8 @@
 K-Means visualization inspired by the Stanford Online Machine Learning course.
 Uses SFML 2.0 Beta.
 
+You can change the number of clusters from 2 to 9 by pressing 0-9 on the keyboard-the next loop will show the algorithm with that many clusters.
+
+Known Bugs:
+
+--Sometimes the iteration gets stuck and doesn't recognise the stability of the clusters - probably something to do with floating-point precision.
