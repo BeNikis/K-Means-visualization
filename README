@@ -6,4 +6,4 @@ You can change the number of clusters from 2 to 9 by pressing 2-9 on the keyboar
 Known Bugs:
 
 --Sometimes the iteration gets stuck and doesn't recognise the stability of the clusters - probably something to do with floating-point precision.
---Occurs less know that we've updated to to SFML2 RC.
+--Occurs less now that we've updated to to SFML2 RC.
