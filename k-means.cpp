@@ -25,8 +25,8 @@
 				
 				for (int c=0;c<cnum;c++) {
 					clusters.push_back(sf::CircleShape(10));
-					clusters[c].SetPosition(std::rand()%800,std::rand()%600);
-					clusters[c].SetFillColor(sf::Color(std::rand()%255,std::rand()%255,std::rand()%255));
+					clusters[c].setPosition(std::rand()%800,std::rand()%600);
+					clusters[c].setFillColor(sf::Color(std::rand()%255,std::rand()%255,std::rand()%255));
 				};
 				
 			};
@@ -34,7 +34,7 @@
 			
 			void draw(sf::RenderWindow& w) {
 				for (int i=0;i<cnum;i++)
-					w.Draw(clusters[i]);
+					w.draw(clusters[i]);
 			};
 			
 			
@@ -52,10 +52,10 @@
 						float distance=999999;
 						int nearest_cluster=0;
 						
-						//std::cout << points[p].GetPosition().x << " " << points[p].GetPosition().y << " ";
+						//std::cout << points[p].getPosition().x << " " << points[p].getPosition().y << " ";
 						for (int c=0;c<cnum;c++) {
 							
-							float c_distance=sqrt(pow(clusters[c].GetPosition().x - points[p].GetPosition().x,2)+pow(clusters[c].GetPosition().y-points[p].GetPosition().y,2));
+							float c_distance=sqrt(pow(clusters[c].getPosition().x - points[p].getPosition().x,2)+pow(clusters[c].getPosition().y-points[p].getPosition().y,2));
 							//std::cout << c_distance << std::endl;
 							if (c_distance<distance) {
 								distance=c_distance;
@@ -73,15 +73,15 @@
 					sf::Vector2f newpos(0.f,0.f);
 					
 					for(unsigned int p=0;p<elems[c]->size();p++) {
-						newpos+=(*elems[c])[p]->GetPosition();
+						newpos+=(*elems[c])[p]->getPosition();
 						
-						(*elems[c])[p]->SetFillColor(clusters[c].GetFillColor()+sf::Color(20,20,20));
+						(*elems[c])[p]->setFillColor(clusters[c].getFillColor()+sf::Color(20,20,20));
 					};
 					
 					newpos/=(float)elems[c]->size();
 					
-					if (!(stable_iteration =stable_iteration && (clusters[c].GetPosition()==newpos)))	
-						clusters[c].SetPosition(newpos);
+					if (!(stable_iteration =stable_iteration && (clusters[c].getPosition()==newpos)))	
+						clusters[c].setPosition(newpos);
 				};
 				clusters_stable=stable_iteration;
 			};
@@ -110,8 +110,8 @@
 			};
 			
 			for (int c=0;c<cnum;c++) {
-					clusters[c].SetPosition(std::rand()%800,std::rand()%600);
-					clusters[c].SetFillColor(sf::Color(std::rand()%255,std::rand()%255,std::rand()%255));
+					clusters[c].setPosition(std::rand()%800,std::rand()%600);
+					clusters[c].setFillColor(sf::Color(std::rand()%255,std::rand()%255,std::rand()%255));
 				};
 				
 			
@@ -128,7 +128,7 @@
 				
 
 int pressedDigit(sf::Event e) {
-	sf::Keyboard::Key num=e.Key.Code;
+	sf::Keyboard::Key num=e.key.code;
 	if ((num >= sf::Keyboard::Num0) && (num <= sf::Keyboard::Num9)) 
 		return num-sf::Keyboard::Num0;
 	else if	((num >= sf::Keyboard::Numpad0) &&	(num <= sf::Keyboard::Numpad9))
@@ -142,7 +142,7 @@ int main(int argc, char** argv)
 {
 	
 	sf::RenderWindow win(sf::VideoMode(800,600,32),"K-Cluster algorithm visualization");
-	win.SetFramerateLimit(5);
+	win.setFramerateLimit(5);
 	sf::Event mainloop;
 	std::vector<sf::CircleShape> points;
 	std::srand(time(NULL));
@@ -150,20 +150,20 @@ int main(int argc, char** argv)
 	
 	for (int i=0;i<100;i++) {
 		points.push_back(sf::CircleShape(5));
-		points[i].SetPosition(std::rand()%800,std::rand()%600);
-		points[i].SetFillColor(sf::Color::White);
+		points[i].setPosition(std::rand()%800,std::rand()%600);
+		points[i].setFillColor(sf::Color::White);
 		
 	};
 	
 	int numc=5;	
 	Clusters clu(numc);
 	
-	while (win.IsOpen()) {
-		win.Clear();
-		while (win.PollEvent(mainloop)) {
-			if (mainloop.Type==sf::Event::Closed) win.Close();
+	while (win.isOpen()) {
+		win.clear();
+		while (win.pollEvent(mainloop)) {
+			if (mainloop.type==sf::Event::Closed) win.close();
 			
-			if (mainloop.Type==sf::Event::KeyPressed) {
+			if (mainloop.type==sf::Event::KeyPressed) {
 				int pressed = pressedDigit(mainloop) ;
 				if (pressed != -1 || pressed != 0 || pressed != 1) numc=pressed;
 			};
@@ -178,13 +178,13 @@ int main(int argc, char** argv)
 		
 		for (unsigned int i=0;i<points.size();i++) {
 			//points[i].Move((std::rand()%7)-3,(std::rand()%7)-3);
-			win.Draw(points[i]);
+			win.draw(points[i]);
 		};
 		
 		
 		
 		clu.draw(win);
-		win.Display();
+		win.display();
 		
 		
 		
