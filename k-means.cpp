@@ -13,7 +13,7 @@
 
 
 
-	class Clusters {
+	class Clusters : public sf::Drawable {
 		
 		std::vector<sf::CircleShape> clusters;
 		int cnum;
@@ -32,9 +32,9 @@
 			};
 			
 			
-			void draw(sf::RenderWindow& w) {
+			void draw(sf::RenderTarget& w,sf::RenderStates states=sf::RenderStates::Default) const {
 				for (int i=0;i<cnum;i++)
-					w.draw(clusters[i]);
+					w.draw(clusters[i],states);
 			};
 			
 			
@@ -183,7 +183,7 @@ int main(int argc, char** argv)
 		
 		
 		
-		clu.draw(win);
+		win.draw(clu);
 		win.display();
 		
 		
